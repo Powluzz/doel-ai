@@ -4,7 +4,7 @@ services:
     runtime: node
     region: frankfurt
     plan: free
-    buildCommand: npm install && npx tsx script/build.ts && npx tsx script/migrate.ts
+    buildCommand: npm install && ./node_modules/.bin/tsx script/build.ts && ./node_modules/.bin/tsx script/migrate.ts
     startCommand: node dist/index.cjs
     envVars:
       - key: NODE_ENV
