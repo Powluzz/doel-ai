@@ -8,10 +8,11 @@ import { login, register } from "@/lib/storage-client";
 
 interface AuthPageProps {
   onAuth: () => void;
+  initialMode?: "login" | "register";
 }
 
-export default function AuthPage({ onAuth }: AuthPageProps) {
-  const [mode, setMode] = useState<"login" | "register">("login");
+export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProps) {
+  const [mode, setMode] = useState<"login" | "register">(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");

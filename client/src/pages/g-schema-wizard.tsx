@@ -166,7 +166,7 @@ export default function GSchemaWizard() {
   }
 
   function back() {
-    if (state.step === 0) { navigate("/"); return; }
+    if (state.step === 0) { navigate("/app"); return; }
     setState(s => ({ ...s, step: s.step - 1 }));
   }
 
@@ -537,7 +537,7 @@ export default function GSchemaWizard() {
             </div>
 
             <div className="w-full space-y-2">
-              <Button className="w-full" onClick={() => navigate("/")} data-testid="button-go-home">
+              <Button className="w-full" onClick={() => navigate("/app")} data-testid="button-go-home">
                 Actie toevoegen aan Vandaag
               </Button>
               <Button variant="outline" className="w-full" onClick={() => {

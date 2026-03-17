@@ -2,7 +2,7 @@ import { useLocation, Link } from "wouter";
 import { Home, BarChart2, User } from "lucide-react";
 
 const tabs = [
-  { href: "/", label: "Vandaag", icon: Home },
+  { href: "/app", label: "Vandaag", icon: Home },
   { href: "/inzicht", label: "Inzicht", icon: BarChart2 },
   { href: "/profiel", label: "Profiel", icon: User },
 ];
