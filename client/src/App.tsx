@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 import { Toaster } from "@/components/ui/toaster";
 import { useState } from "react";
-import { getMe } from "./lib/storage-client";
+import { getToken } from "./lib/auth";
 import { Router } from "wouter";
 
 import AuthPage from "./pages/auth";
@@ -15,7 +15,7 @@ import NotFound from "./pages/not-found";
 import BottomNav from "./components/BottomNav";
 
 function AppRoutes() {
-  const [authed, setAuthed] = useState(!!getMe());
+    const [authed, setAuthed] = useState(!!getToken());
 
   return (
     <Switch>
