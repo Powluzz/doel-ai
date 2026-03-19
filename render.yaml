@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: doel-ai
+    name: doel-io
     runtime: node
     region: frankfurt
     plan: free
@@ -11,12 +11,12 @@ services:
         value: production
       - key: DATABASE_URL
         fromDatabase:
-          name: doel-ai-db
+          name: doel-io-db
           property: connectionString
 
 databases:
-  - name: doel-ai-db
+  - name: doel-io-db
     region: frankfurt
     plan: free
-    databaseName: doeiai
-    user: doeiai
+    databaseName: doelio
+    user: doelio
