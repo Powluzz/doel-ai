@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { login, register } from "@/lib/storage-client";
 
@@ -10,6 +10,14 @@ interface AuthPageProps {
   onAuth: () => void;
   initialMode?: "login" | "register";
 }
+
+const gSchema = [
+  { label: "Gebeurtenis", color: "bg-blue-50 border-blue-100 text-blue-800" },
+  { label: "Gedachten", color: "bg-purple-50 border-purple-100 text-purple-800" },
+  { label: "Gevoelens", color: "bg-rose-50 border-rose-100 text-rose-800" },
+  { label: "Gedrag", color: "bg-amber-50 border-amber-100 text-amber-800" },
+  { label: "Gevolgen", color: "bg-green-50 border-green-100 text-green-800" },
+];
 
 export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProps) {
   const [mode, setMode] = useState<"login" | "register">(initialMode);
@@ -23,11 +31,8 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === "login") {
-        login(email, password);
-      } else {
-        register(email, password, name);
-      }
+      if (mode === "login") login(email, password);
+      else register(email, password, name);
       onAuth();
     } catch (err: any) {
       toast({ title: "Fout", description: err.message, variant: "destructive" });
@@ -37,34 +42,39 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-sm">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary mb-4">
-            <svg viewBox="0 0 32 32" fill="none" className="w-8 h-8" aria-label="doel.io logo">
-              <circle cx="16" cy="16" r="12" stroke="white" strokeWidth="2.5" fill="none" />
-              <circle cx="16" cy="16" r="5" fill="white" />
-              <path d="M16 4 L16 8M16 24 L16 28M4 16 L8 16M24 16 L28 16" stroke="white" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">doel.io</h1>
-          <p className="text-muted-foreground text-sm mt-1">Werk stap voor stap aan je doelen</p>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Navbar */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/">
+            <span className="text-lg font-bold text-foreground cursor-pointer">doel.io</span>
+          </Link>
+          <button
+            type="button"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => setMode(mode === "login" ? "register" : "login")}
+          >
+            {mode === "login" ? "Nog geen account? Aanmelden" : "Al een account? Inloggen"}
+          </button>
         </div>
+      </header>
 
-        <Card className="border-border shadow-md">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg">
-              {mode === "login" ? "Inloggen" : "Account aanmaken"}
-            </CardTitle>
-            <CardDescription>
+      {/* Hero split */}
+      <section className="max-w-5xl mx-auto px-6 py-16 md:py-24">
+        <div className="flex flex-col md:flex-row gap-12 items-center">
+
+          {/* Links: formulier */}
+          <div className="flex-1 space-y-6">
+            <h1 className="text-3xl md:text-4xl font-bold leading-tight text-foreground">
+              {mode === "login" ? "Welkom terug" : "Begin vandaag"}
+            </h1>
+            <p className="text-lg text-muted-foreground">
               {mode === "login"
-                ? "Welkom terug. Log in om verder te gaan."
-                : "Begin vandaag met je G-schema's."}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+                ? "Log in en ga verder aan je doelen."
+                : "Maak een account aan en start met je eerste G-schema."}
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-4 max-w-sm">
               {mode === "register" && (
                 <div className="space-y-1.5">
                   <Label htmlFor="name">Naam</Label>
@@ -105,6 +115,7 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
               </div>
               <Button
                 type="submit"
+                size="lg"
                 className="w-full"
                 disabled={loading}
                 data-testid="button-submit"
@@ -112,20 +123,34 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
                 {loading ? "Even geduld..." : mode === "login" ? "Inloggen" : "Account aanmaken"}
               </Button>
             </form>
-            <p className="text-center text-sm text-muted-foreground mt-4">
-              {mode === "login" ? "Nog geen account?" : "Al een account?"}{" "}
-              <button
-                type="button"
-                className="text-primary font-medium hover:underline"
-                onClick={() => setMode(mode === "login" ? "register" : "login")}
-              >
-                {mode === "login" ? "Aanmelden" : "Inloggen"}
-              </button>
+
+            <p className="text-xs text-muted-foreground border-t border-border pt-4">
+              Gebaseerd op cognitieve gedragstherapie en het bewezen G-schema-model.
             </p>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+
+          {/* Rechts: G-schema visual */}
+          <div className="flex-shrink-0 w-full md:w-72">
+            <div className="bg-card border border-border rounded-2xl p-5 space-y-2 shadow-sm">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+                Voorbeeld G-schema
+              </p>
+              {gSchema.map((item, i) => (
+                <div
+                  key={item.label}
+                  className={`rounded-xl border px-4 py-3 ${item.color} text-sm font-medium flex items-center gap-3`}
+                >
+                  <span className="w-5 h-5 rounded-full bg-white/60 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    {i + 1}
+                  </span>
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
     </div>
   );
 }
-
