@@ -95,9 +95,9 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <>
+        <Router hook={useHashLocation}>
       <AppRoutes />
       <Toaster />
-    </>
+        </Router>
   );
 }
