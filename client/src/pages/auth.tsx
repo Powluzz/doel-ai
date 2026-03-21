@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { setAuth } from "@/lib/auth";
+import Logo from "@/components/Logo";
 
 interface AuthPageProps {
   onAuth: () => void;
@@ -51,7 +52,7 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/">
-            <span className="text-lg font-bold text-foreground cursor-pointer">doel.io</span>
+            <Logo variant="kleur" size="full" height={28} className="cursor-pointer" />
           </Link>
           <button
             type="button"
@@ -62,11 +63,9 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
           </button>
         </div>
       </header>
-
       {/* Hero split */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24">
         <div className="flex flex-col md:flex-row gap-12 items-center">
-
           {/* Links: formulier */}
           <div className="flex-1 space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold leading-tight text-foreground">
@@ -77,7 +76,6 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
                 ? "Log in en ga verder aan je doelen."
                 : "Maak een account aan en start met je eerste G-schema."}
             </p>
-
             <form onSubmit={handleSubmit} className="space-y-4 max-w-sm">
               {mode === "register" && (
                 <div className="space-y-1.5">
@@ -127,12 +125,10 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
                 {loading ? "Even geduld..." : mode === "login" ? "Inloggen" : "Account aanmaken"}
               </Button>
             </form>
-
             <p className="text-xs text-muted-foreground border-t border-border pt-4">
               Gebaseerd op cognitieve gedragstherapie en het bewezen G-schema-model.
             </p>
           </div>
-
           {/* Rechts: G-schema visual */}
           <div className="flex-shrink-0 w-full md:w-72">
             <div className="bg-card border border-border rounded-2xl p-5 space-y-2 shadow-sm">
@@ -152,7 +148,6 @@ export default function AuthPage({ onAuth, initialMode = "login" }: AuthPageProp
               ))}
             </div>
           </div>
-
         </div>
       </section>
     </div>
