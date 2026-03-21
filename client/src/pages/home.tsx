@@ -57,7 +57,7 @@ export default function HomePage() {
         <span className="text-2xl font-bold text-primary">{streakCount}</span>
       </div>
 
-      <Link href="/schema">
+      <Link href="/g-schema">
         <Button className="w-full gap-2"><Plus size={18} /> Nieuw G-schema</Button>
       </Link>
 
